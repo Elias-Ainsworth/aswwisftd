@@ -13,6 +13,11 @@
     {
       devShells = forEachSystem (pkgs: {
         default = pkgs.mkShell {
+          packages = with pkgs; [
+            # helper shell script
+            (writeShellScriptBin "wtftd" ''cargo run -q -- "$@"'')
+          ];
+
           env = {
             # Required by rust-analyzer
             RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
