@@ -28,6 +28,25 @@
         };
       });
 
-      packages = forEachSystem (pkgs: { });
+      packages = forEachSystem (pkgs: rec {
+        aswwisftd = pkgs.rustPlatform.buildRustPackage {
+          pname = "wtftd";
+          version = "0.0.0";
+
+          src = ./.;
+
+          cargoLock = {
+            lockFile = ./Cargo.lock;
+          };
+
+          meta = with pkgs.lib; {
+            description = "another fucking todo cli/tui(wip) that reminds you what the fuck to do.";
+            license = licenses.mit;
+            maintainers = [ lib.maintainers.elias-ainsworth ];
+            platforms = platforms.all;
+          };
+        };
+        default = aswwisftd;
+      });
     };
 }
